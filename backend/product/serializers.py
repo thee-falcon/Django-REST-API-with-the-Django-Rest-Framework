@@ -10,7 +10,7 @@ class ProductSrializer(serializers.ModelSerializer):
             'content',
             'price',
             'sale_price',
-            'my_discount'
+            'my_discount',
         ]
         
     def get_my_discount(self, obj):
@@ -18,4 +18,4 @@ class ProductSrializer(serializers.ModelSerializer):
             return None
         if not isinstance(obj, Product):
             return None
-        return obj.get_dicount()
+        return obj.get_discount()
