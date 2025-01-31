@@ -16,13 +16,17 @@ class ProductListCreatAPIView(generics.ListCreateAPIView):
     
     # handle the json data from the client(POST request)
     def perform_create(self, serializer):
-        # print(serializer.validated_data)
         title = serializer.validated_data.get('title')
         content = serializer.validated_data.get('content') or None
         if content is None:
             content = title
         serializer.save(content=content)
- 
+
+class ProductUpdateCreateView(generics.UpdateAPIView):
+    serializer_class = ProductSrializer
+    queryset = Product.objects.all()
+    lookup_field = 'pk'
+    
 
 # another way to handle crud request in one single function
 @api_view(['GET', 'POST'])    
