@@ -1,10 +1,7 @@
 from django.shortcuts import render
-
-from asyncio import mixins
-
 from requests import get
 from .models import Product
-from rest_framework import generics
+from rest_framework import generics, mixins
 from .serializers import ProductSrializer
 from rest_framework.decorators import api_view
 from django.shortcuts import get_object_or_404
