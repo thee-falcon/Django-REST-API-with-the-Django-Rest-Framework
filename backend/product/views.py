@@ -1,10 +1,15 @@
 from django.shortcuts import render
+
+from asyncio import mixins
+
+from requests import get
 from .models import Product
 from rest_framework import generics
 from .serializers import ProductSrializer
 from rest_framework.decorators import api_view
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
+from rest_framework.mixins import ListModelMixin
 
 class ProductDetailAPIView(generics.RetrieveAPIView):
     queryset = Product.objects.all() # and we can change queryset using function: def get_queryset()
@@ -26,7 +31,14 @@ class ProductUpdateCreateView(generics.UpdateAPIView):
     serializer_class = ProductSrializer
     queryset = Product.objects.all()
     lookup_field = 'pk'
+
+class ProductMixinView(mixins.ListModelMixin, generics.GenericAPIView):
+    serializer_class = ProductSrializer
+    queryset = Product.objects.all()
     
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
 
 # another way to handle crud request in one single function
 @api_view(['GET', 'POST'])    
